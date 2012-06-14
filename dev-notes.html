@@ -36,12 +36,12 @@
 </ul></li>
 <li>writing your own...
 <ul>
+<li>...commands</li>
 <li>...hooks
 <ul>
 <li>anything but the update hook</li>
 <li>update hook</li>
 </ul></li>
-<li>...commands</li>
 <li>...trigger programs</li>
 <li>..."sugar"</li>
 </ul></li>
@@ -54,8 +54,9 @@
 <p>Gitolite has a huge bunch of existing features that gradually need to moved
 over.  Plus you may want to write your own programs to interact with it.</p>
 
-<p>Here are some random notes on developing hooks, commands, triggers, and sugar
-scripts.</p>
+<p><strong>This document is about <em>writing</em> hooks, commands, triggers, VREFS, and sugar
+scripts.  <em>Installing</em> them, including "where and how", is described
+<a href="cust.html#localcode">here</a></strong>.</p>
 
 <h2>environment variables and other inputs</h2>
 
@@ -103,14 +104,19 @@ serve as documentation.</p>
 
 <h2>writing your own...</h2>
 
+<h3>...commands</h3>
+
+<p>Commands are standalone programs, in any language you like.  They simply
+receive the arguments you append.  In addition, the env var <code>GL_USER</code> is
+available if it is being run remotely.  src/commands/desc is the best example
+at present.</p>
+
 <h3>...hooks</h3>
 
 <h4>anything but the update hook</h4>
 
-<p>If you want to add your own hook, it's easy as long as it's not the 'update'
-hook.  Just add it to <code>$HOME/.gitolite/hooks/common</code> and run <code>gitolite setup</code>.</p>
-
-<p>The rest is between you and 'man githooks' :-)</p>
+<p>If you want to add any hook other than the update hook, 'man githooks' is all
+you need.</p>
 
 <h4>update hook</h4>
 
@@ -118,7 +124,8 @@ hook.  Just add it to <code>$HOME/.gitolite/hooks/common</code> and run <code>gi
 
 <ul>
 <li><p>Write and test your update hook separately from gitolite.</p></li>
-<li><p>Now add the code to src/VREF.  Let's say it is called "foo".</p></li>
+<li><p>Now add the code as a VREF (see <a href="cust.html#localcode">here</a> for details).  Let's say
+you called it "foo".</p></li>
 <li><p>To call your new update hook to all accesses for all repos, add this to
 the end of your conf file:</p>
 
@@ -127,23 +134,12 @@ the end of your conf file:</p>
 </code></pre></li>
 </ul>
 
-<p>As you probably guessed, you can now make your additional update hooks more
+<p>As you probably guessed, you can make your additional update hooks more
 selective, applying them only to some repos / users / combinations.</p>
 
 <p>Note: a normal update hook expects 3 arguments (ref, old SHA, new SHA).  A
 VREF will get those three, followed by at least 4 more.  Your VREF should just
 ignore the extra args.</p>
-
-<h3>...commands</h3>
-
-<p>You can add your own commands.  You can run them on the server (example,
-<code>gitolite access</code>).  Then you can enable certain commands to be allowed to run
-by a remote user by adding them to the "COMMANDS" hash of the <a href="rc.html">rc</a> file.</p>
-
-<p>Commands are standalone programs, in any language you like.  They simply
-receive the arguments you append.  In addition, the env var <code>GL_USER</code> is
-available if it is being run remotely.  src/commands/desc is the best example
-at present.</p>
 
 <h3>...trigger programs</h3>
 

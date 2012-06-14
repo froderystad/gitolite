@@ -185,6 +185,12 @@ repo is created by user action.  Extra arguments:</p>
 <ul>
 <li>repo</li>
 <li>user</li>
+<li>invoking operation
+<ul>
+<li>'R' for fetch/clone/ls-remote, 'W' for push</li>
+<li>can also be anything set by the external command running the
+trigger (e.g., see the perms and fork commands).</li>
+</ul></li>
 </ul>
 
 <p>They are also run when a <em>normal</em> repo is created (say by adding a "repo

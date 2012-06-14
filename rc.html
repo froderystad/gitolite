@@ -125,32 +125,8 @@ require the '@' to be escaped:</p>
 
 <pre><code>DEFAULT_ROLE_PERMS  =&gt;  "READERS \@all\nWRITERS \@senior_devs",
 </code></pre></li>
-<li><p><code>GL_BINDIR2</code>, string</p>
+<li><p><code>LOCAL_CODE</code>, string</p>
 
-<p>This is useful when you install gitolite system-wide, but want to add or
-override commands, VREFs, triggers, etc., by putting them somewhere in the
-hosting user's home directory (i.e., without requiring root privileges).</p>
-
-<p>Add a new variable <code>GL_BINDIR2</code> to the the rc file.  Example:</p>
-
-<pre><code>GL_BINDIR2 =&gt; "$ENV{HOME}/gitolite/src2",
-</code></pre>
-
-<p>In that directory, create as much of the following directory structure as
-you need to add your programs:</p>
-
-<pre><code>.
-|-- commands
-|-- lib
-|   `-- Gitolite
-|       `-- Triggers
-|-- syntactic-sugar
-|-- triggers
-`-- VREF
-</code></pre>
-
-<p><strong>NOTE</strong>: if you set this to something like <code>$ENV{HOME}/.gitolite/src</code> and
-add an "src" directory with that structure to the admin repo, you could
-maintain it by pushing.  This could be useful in sites where people who
-have admin push rights already have server shell access anyway.</p></li>
+<p>This is described in more detail <a href="cust.html#localcode">here</a>.  Please be aware
+<strong>this must be a FULL path</strong>, not a relative path.</p></li>
 </ul>
